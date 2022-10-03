@@ -49,7 +49,7 @@ const ForgotPasswordPage: NextPage = () => {
         setEmailError('')
       }
     })
-  }, [email])
+  }, [email, client])
 
   return (
     <ForgotPassword
