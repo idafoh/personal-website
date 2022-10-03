@@ -39,7 +39,7 @@ const BlogPostPage: NextPage<PageProps> = ({ post }) => {
   )
 }
 
-export const getServerSideProp: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const slug = context.params?.slug
   const url = `${process.env.NEXT_PUBLIC_API_URL}/posts/${slug}`
 
