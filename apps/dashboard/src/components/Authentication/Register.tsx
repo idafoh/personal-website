@@ -1,7 +1,8 @@
+import type { RegisterData as IFormData } from '~/lib/auth-provider'
 import { Link, useNavigate } from 'react-router-dom'
 import { Register } from 'ui'
 import { useForm } from '@mantine/form'
-import { RegisterData as IFormData, useAuth } from '~/context/auth'
+import { useAuth } from '~/context/auth'
 
 export const AuthRegister: React.FC = () => {
   const auth = useAuth()
