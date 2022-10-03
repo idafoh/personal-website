@@ -1,4 +1,4 @@
-import type { GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import { SinglePost } from '../../components/blog/single'
 
@@ -11,7 +11,7 @@ export interface Post {
   views: number
   createdAt: string
   updatedAt: string
-  author: { firstName: string; lastName: string, avatar?: string }
+  author: { firstName: string; lastName: string; avatar?: string }
   comments: {
     id: number
     body: string
@@ -39,30 +39,7 @@ const BlogPostPage: NextPage<PageProps> = ({ post }) => {
   )
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/posts/feed`
-  let paths: string[]
-  try {
-    const response = await fetch(url)
-
-    if (!response.ok) {
-      throw new Error('Something went wrong!')
-    }
-
-    const posts = await response.json()
-
-    paths = posts.map(({ slug }: { slug: string }) => `/blog/${slug}`)
-  } catch (error) {
-    paths = []
-  }
-
-  return {
-    paths,
-    fallback: 'blocking',
-  }
-}
-
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProp: GetServerSideProps = async (context) => {
   const slug = context.params?.slug
   const url = `${process.env.NEXT_PUBLIC_API_URL}/posts/${slug}`
 
