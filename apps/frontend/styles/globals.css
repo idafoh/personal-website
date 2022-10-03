@@ -12,6 +12,10 @@
   color: #89acff;
 }
 
+.post-content img {
+  max-width: 100%;
+}
+
 .blue-links a {
   color: #89acff;
 }
