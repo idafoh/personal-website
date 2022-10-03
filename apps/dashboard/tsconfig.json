@@ -1,0 +1,14 @@
+{
+  "extends": "tsconfig/vite.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["src/*"]
+    },
+    "declaration": false,
+    "declarationMap": false
+  },
+  "include": ["src", "./env.d.ts"],
+  "exclude": ["node_modules"]
+  // "references": [{ "path": "./tsconfig.node.json" }],
+}

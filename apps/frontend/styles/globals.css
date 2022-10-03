@@ -1,0 +1,138 @@
+.container {
+  width: 80%;
+  margin: 6rem auto;
+}
+
+.container.contact {
+  width: 60%;
+  margin-top: 3rem;
+}
+
+.post-content a {
+  color: #89acff;
+}
+
+.blue-links a {
+  color: #89acff;
+}
+
+.hover-onpoint:hover {
+  cursor: pointer;
+}
+
+.center-old-school {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.my-tools-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bars-container {
+  display: flex;
+  overflow: hidden;
+  align-items: flex-end;
+  width: auto;
+}
+
+.bars-container .bar1 {
+  background-color: #d1d5db;
+  width: 0.25rem;
+  height: 0.5rem;
+  opacity: 0.75;
+  margin-right: 3px;
+}
+
+.bars-container .bar2 {
+  background-color: #d1d5db;
+  width: 0.25rem;
+  height: 0.25rem;
+  margin-right: 3px;
+}
+
+.bars-container .bar3 {
+  background-color: #d1d5db;
+  width: 0.25rem;
+  height: 0.75rem;
+  opacity: 0.8;
+}
+
+.now-playing-container {
+  display: flex;
+  margin-bottom: 2rem;
+  margin-left: 0;
+  flex-direction: row-reverse;
+  align-items: center;
+  width: 100%;
+}
+
+.now-playing-container .now-playing {
+  display: inline-flex;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+}
+
+.playing-song-link {
+  color: #1f2937;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: max-content;
+}
+
+.not-playing {
+  font-weight: 500;
+}
+
+.song-separator {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  color: #6b7280;
+}
+
+.song-artist {
+  color: #6b7280;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: max-content;
+}
+
+@media (min-width: 640px) {
+  .now-playing-container {
+    flex-direction: row;
+    gap: 10px;
+  }
+  .now-playing-container .now-playing {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.spotify-icon {
+  width: 1rem;
+  height: 1rem;
+  margin-top: -2px;
+}
+
+@media (min-width: 768px) {
+  main {
+    min-height: 78vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .my-tools-container {
+    flex-direction: column;
+  }
+}
