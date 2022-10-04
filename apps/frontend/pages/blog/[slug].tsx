@@ -1,4 +1,4 @@
-import type { GetServerSideProps, NextPage } from 'next'
+import type { GetServerSideProps, GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import { SinglePost } from '../../components/blog/single'
 
@@ -39,7 +39,15 @@ const BlogPostPage: NextPage<PageProps> = ({ post }) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    // This will be soon generated via revalidating
+    paths: ['/blog/hello-world'],
+    fallback: 'blocking',
+  }
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
   const slug = context.params?.slug
   const url = `${process.env.NEXT_PUBLIC_API_URL}/posts/${slug}`
 
@@ -60,7 +68,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       props: { post },
     }
   } catch (error: any) {
-    console.log('[/blog/[post]] ERROR', error.message)
     return { notFound: true }
   }
 }
