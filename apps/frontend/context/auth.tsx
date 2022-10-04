@@ -30,10 +30,11 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     auth.getToken().then((token) => {
-      setToken(token)
+      if (token) {
+        setToken(token)
+        auth.getMe().then((user) => setUser(user))
+      }
     })
-
-    auth.getMe().then((user) => setUser(user))
   }, [])
 
   const login = useCallback(async (data: auth.LoginData) => {
