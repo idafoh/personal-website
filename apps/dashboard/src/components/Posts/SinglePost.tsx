@@ -1,7 +1,9 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useFetcher } from 'react-router-dom'
 import { Button, Paper, Switch, Text, TextInput } from '@mantine/core'
 import { RichTextEditor } from '@mantine/rte'
+import { useClient } from '~/hooks/useClient'
+import { useNotification } from 'hooks'
 
 interface Props {
   initialData?: {
@@ -15,6 +17,8 @@ interface Props {
 
 export const SinglePost: React.FC<Props> = ({ initialData }) => {
   const isNewPost = !initialData
+  const client = useClient()
+  const { show } = useNotification()
   const { Form, submit } = useFetcher()
   const [title, setTitle] = useState(initialData?.title || '')
   const [content, onContentChange] = useState(initialData?.content || '')
@@ -36,6 +40,22 @@ export const SinglePost: React.FC<Props> = ({ initialData }) => {
     }
   }
 
+  const handleImageUpload = useCallback(
+    async (image: File): Promise<string> => {
+      const formData = new FormData()
+      formData.append('image', image, image.name)
+
+      try {
+        const data = await client('file/image', { data: formData, method: 'POST' })
+        return data.url as string
+      } catch (error) {
+        show({ title: 'Error', message: 'Cannot upload image please try again' }, { error: true })
+        return ''
+      }
+    },
+    [client]
+  )
+
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const isPublishStatusChanged = (initialData?.published !== published).toString()
@@ -56,10 +76,10 @@ export const SinglePost: React.FC<Props> = ({ initialData }) => {
   return (
     <Paper shadow="sm" p="md">
       <Form onSubmit={onSubmit}>
-        <TextInput mb={30} sx={{ width: '40%' }} label="Title" name="title" value={title} onChange={handleChange('title')} />
+        <TextInput mb={30} sx={{ width: '40%' }} label="Title" name="title" value={title} onChange={handleChange('title')} required />
 
         <Text>Content</Text>
-        <RichTextEditor value={content} onChange={onContentChange} />
+        <RichTextEditor onImageUpload={handleImageUpload} value={content} onChange={onContentChange} />
 
         {initialData && <Switch mt={30} name="published" label="Published" checked={published} onChange={(e) => setPublished(e.target.checked)} />}
 

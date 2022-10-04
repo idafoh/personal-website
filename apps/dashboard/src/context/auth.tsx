@@ -30,13 +30,14 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     auth.getToken().then((token) => {
-      setToken(token)
-    })
-
-    auth.getMe().then((user) => {
-      setUser(user)
-      setRole(user.role)
-      setVerified(user.verified ?? false)
+      if (token) {
+        setToken(token)
+        auth.getMe().then((user) => {
+          setUser(user)
+          setRole(user.role)
+          setVerified(user.verified ?? false)
+        })
+      }
     })
   }, [])
 

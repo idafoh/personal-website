@@ -38,5 +38,12 @@ export const DraftsPage: React.FC = () => {
 }
 
 export const loader: LoaderFunction = async () => {
-  return client('posts/my?published=false', { token: await getToken() })
+  const token = await getToken()
+  if (!token) return null
+
+  try {
+    return await client('posts/my?published=false', { token })
+  } catch (error) {
+    return null
+  }
 }

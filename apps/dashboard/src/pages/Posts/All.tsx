@@ -30,7 +30,7 @@ export const AllPostsPage: React.FC = () => {
   return (
     <>
       <Container sx={{ maxWidth: 'unset' }} p="md">
-        <PostsTable onDelete={onDeleteClick} data={data} />
+        <PostsTable onDelete={onDeleteClick} data={Array.isArray(data) ? data : []} />
       </Container>
       <DeleteModal opened={deleting} onClose={() => setDeleting(false)} id={deletingId} title={deletingTitle} deleteCallback={afterDelete} />
     </>
@@ -38,7 +38,14 @@ export const AllPostsPage: React.FC = () => {
 }
 
 export const loader: LoaderFunction = async () => {
-  return client('posts/my', { token: await getToken() })
+  const token = await getToken()
+  if (!token) return null
+
+  try {
+    return await client('posts/my', { token })
+  } catch (error) {
+    return null
+  }
 }
 
 export const action: ActionFunction = async ({ request }) => {

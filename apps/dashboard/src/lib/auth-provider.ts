@@ -60,12 +60,12 @@ const handleUserResponse = (result: ApiResponse) => {
 }
 
 export const login = async (data: LoginData) => {
-  const result = await client('login', data)
+  const result = await client('login', { ...data, username: data.username.trim().toLowerCase() })
   return handleUserResponse(result)
 }
 
 export const register = async (data: RegisterData) => {
-  const result = await client('register', data)
+  const result = await client('register', { ...data, username: data.username.trim().toLowerCase() })
   return handleUserResponse(result)
 }
 
