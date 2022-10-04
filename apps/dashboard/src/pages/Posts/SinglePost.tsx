@@ -19,7 +19,14 @@ export const SinglePostPage: React.FC = () => {
 }
 
 export const loader: LoaderFunction = async ({ params }) => {
-  return client(`posts/my/${params.slug}`, { token: await getToken() })
+  const token = await getToken()
+  if (!token) return null
+
+  try {
+    return await client(`posts/my/${params.slug}`, { token })
+  } catch (error) {
+    return null
+  }
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
