@@ -48,13 +48,14 @@ export const router = createBrowserRouter([
           </RequireAuth>
         ),
         loader: dashboardLoader,
+        shouldRevalidate: ({ currentUrl }) => currentUrl.pathname !== '/dashboard',
       },
       {
         path: '/posts',
         children: [
-          { path: 'all', element: <AllPostsPage />, loader: postsLoader, action: postsAction },
-          { path: 'published', element: <PublishedPostsPage />, loader: publishedLoader },
-          { path: 'drafts', element: <DraftsPage />, loader: draftLoader },
+          { path: 'all', element: <AllPostsPage />, loader: postsLoader, action: postsAction, shouldRevalidate: ({ currentUrl }) => currentUrl.pathname !== '/posts/all' },
+          { path: 'published', element: <PublishedPostsPage />, loader: publishedLoader, shouldRevalidate: ({ currentUrl }) => currentUrl.pathname !== '/posts/published' },
+          { path: 'drafts', element: <DraftsPage />, loader: draftLoader, shouldRevalidate: ({ currentUrl }) => currentUrl.pathname !== '/posts/drafts' },
           { path: 'create', element: <CreatePostPage />, action: createPostAction },
           { path: ':slug', element: <SinglePostPage />, loader: postLoader },
           { path: ':slug/update', action: updatePostAction },
@@ -68,6 +69,7 @@ export const router = createBrowserRouter([
           </RequireAuth>
         ),
         loader: usersLoader,
+        shouldRevalidate: ({ currentUrl }) => currentUrl.pathname !== '/users',
       },
       {
         path: '/settings',
@@ -77,14 +79,6 @@ export const router = createBrowserRouter([
           { path: 'update/emailAndUsername', action: updateEmailAndUsernameAction },
           { path: 'update/password', action: updatePasswordAction },
         ],
-      },
-      {
-        path: '/protected',
-        element: (
-          <RequireAuth>
-            <h3>Protected</h3>
-          </RequireAuth>
-        ),
       },
     ],
   },
