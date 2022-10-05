@@ -81,6 +81,11 @@ export const getMe = async () => {
   }
 
   return fetch(url, config).then(async (response) => {
+    if (response.status === 401) {
+      await logout()
+      window.location.assign(window.location.href)
+      return Promise.reject({ message: 'Please re-authenticate.' })
+    }
     const data = await response.json()
     if (response.ok) {
       return data as User
