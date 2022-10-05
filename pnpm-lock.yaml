@@ -30,6 +30,7 @@ importers:
       apexcharts: ^3.35.5
       eslint-config-custom: workspace:*
       hooks: workspace:*
+      plausible-tracker: ^0.3.8
       react: ^18.2.0
       react-apexcharts: ^1.4.0
       react-dom: ^18.2.0
@@ -50,6 +51,7 @@ importers:
       '@tabler/icons': 1.101.0_biqbaboplfbrettd7655fr4n2y
       apexcharts: 3.35.5
       hooks: link:../../packages/hooks
+      plausible-tracker: 0.3.8
       react: 18.2.0
       react-apexcharts: 1.4.0_h6blzwyvqeswgdo7gczbninyvy
       react-dom: 18.2.0_react@18.2.0
@@ -3018,6 +3020,11 @@ packages:
   /picomatch/2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
+
+  /plausible-tracker/0.3.8:
+    resolution: {integrity: sha512-lmOWYQ7s9KOUJ1R+YTOR3HrjdbxIS2Z4de0P/Jx2dQPteznJl2eX3tXxKClpvbfyGP59B5bbhW8ftN59HbbFSg==}
+    engines: {node: '>=10'}
+    dev: false
 
   /postcss/8.4.14:
     resolution: {integrity: sha512-E398TUmfAYFPBSdzgeieK2Y1+1cpdxJx8yXbK/m57nRhKSmk1GB2tO4lbLBtlkfPQTDKfe4Xqv1ASWPpayPEig==}

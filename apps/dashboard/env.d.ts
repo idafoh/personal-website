@@ -5,6 +5,7 @@ declare const APP_VERSION: string
 interface ImportMetaEnv {
   readonly VITE_BACKEND_URL: string
   readonly VITE_AUTH_URL: string
+  readonly VITE_APP_DOMAIN: string
 }
 
 interface ImportMeta {
