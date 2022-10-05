@@ -77,7 +77,7 @@ const RegisterPage: NextPage = () => {
         break
 
       case 'username':
-        setUsername(value)
+        setUsername(value?.toLowerCase())
         break
 
       case 'email':
