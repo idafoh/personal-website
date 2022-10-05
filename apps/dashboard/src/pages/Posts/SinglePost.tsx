@@ -37,27 +37,33 @@ export const action: ActionFunction = async ({ request, params }) => {
   const content = formData.get('content') as string
   const unpushlish = formData.get('published') === 'off'
   const isPublishStatusChanged = formData.get('isPublishStatusChanged') === 'true'
+  const isPostDataChanged = formData.get('isPostDataChanged') === 'true'
 
+  const token = await getToken()
   const data = { title, content }
 
-  try {
-    startNavigationProgress()
-    await client(`posts/my/${id}`, {
-      token: await getToken(),
-      method: 'PATCH',
-      data,
-    })
-  } catch (error) {}
+  if (isPostDataChanged) {
+    try {
+      startNavigationProgress()
+      await client(`posts/my/${id}`, {
+        token,
+        method: 'PATCH',
+        data,
+      })
+    } catch (error) {}
+  }
 
   if (isPublishStatusChanged) {
     if (unpushlish) {
+      startNavigationProgress()
       await client(`posts/unpublish/${id}`, {
-        token: await getToken(),
+        token,
         method: 'POST',
       })
     } else {
+      startNavigationProgress()
       await client(`posts/publish/${id}`, {
-        token: await getToken(),
+        token,
         method: 'POST',
       })
     }
