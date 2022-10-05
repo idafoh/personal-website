@@ -4,10 +4,12 @@ import { useEffect, useState } from 'react'
 import { useDebouncedState } from '@mantine/hooks'
 import { ForgotPassword } from 'ui'
 import { useNotification } from 'hooks'
+import { usePlausible } from 'next-plausible'
 import { useClient } from '../hooks/use-client'
 
 const ForgotPasswordPage: NextPage = () => {
   const client = useClient()
+  const plausible = usePlausible()
   const router = useRouter()
   const { show } = useNotification()
   const [email, setEmail] = useDebouncedState('', 700)
@@ -16,6 +18,9 @@ const ForgotPasswordPage: NextPage = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    // I don't care result whether is successfull or not
+    // IMPORTANT: Never send data to plausible that can be used to identify a user
+    plausible('send-password-restore-link')
 
     if (!email) {
       setEmailError('Email is required')

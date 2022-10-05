@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import { createStyles, Header, Container, Group, Burger, Paper, Transition, ActionIcon } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import Link from 'next/link'
+import { usePlausible } from 'next-plausible'
 import { Avatar } from '../feature/avatar'
 import { Theme } from '../feature/theme'
 
@@ -93,6 +94,7 @@ interface HeaderResponsiveProps {
 export function HeaderResponsive({ links, activePath }: HeaderResponsiveProps) {
   const [opened, { toggle }] = useDisclosure(false)
   const { classes, cx } = useStyles()
+  const plausible = usePlausible()
 
   const items = links.map((link) => (
     <Link key={link.label} href={link.link}>
@@ -108,7 +110,16 @@ export function HeaderResponsive({ links, activePath }: HeaderResponsiveProps) {
         </Group>
 
         <Group className={classes.actionGroup}>
-          <ActionIcon component="a" href="https://github.com/dauletbaev/abat.me" target="_blank" rel="noreferrer noopener" color="grape" variant="outline">
+          <ActionIcon
+            title="Github Repository"
+            component="a"
+            href="https://github.com/dauletbaev/abat.me"
+            onClick={() => plausible('github-repo')}
+            target="_blank"
+            rel="noreferrer noopener"
+            color="grape"
+            variant="outline"
+          >
             <Icon icon="tabler:brand-github" fontSize={18} />
           </ActionIcon>
           <Theme switchVariant={false} />

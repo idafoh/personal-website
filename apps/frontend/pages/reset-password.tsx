@@ -5,10 +5,12 @@ import { showNotification } from '@mantine/notifications'
 import { useRouter } from 'next/router'
 import { useDebouncedState } from '@mantine/hooks'
 import { useClient } from '../hooks/use-client'
+import { usePlausible } from 'next-plausible'
 
 const ResetPasswordPage: NextPage = () => {
   const router = useRouter()
   const client = useClient()
+  const plausible = usePlausible()
   const [token, setToken] = useState('')
   const [newPassword, setNewPassword] = useDebouncedState('', 400)
   const [confirmPassword, setConfirmPassword] = useDebouncedState('', 400)
@@ -17,6 +19,9 @@ const ResetPasswordPage: NextPage = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    // I don't care result whether is successfull or not
+    // IMPORTANT: Never send data to plausible that can be used to identify a user
+    plausible('try-reset-password')
 
     if (!newPassword || !confirmPassword) {
       setErrorMessage('New password is required')

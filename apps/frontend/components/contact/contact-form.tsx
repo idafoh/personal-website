@@ -2,9 +2,11 @@ import { useRef } from 'react'
 import { TextInput, Textarea, Button, Group, SimpleGrid } from '@mantine/core'
 import { useNotification } from 'hooks'
 import { useClient } from '../../hooks/use-client'
+import { usePlausible } from 'next-plausible'
 
 export const ContactForm: React.FC = () => {
   const client = useClient()
+  const plausible = usePlausible()
   const { show, update } = useNotification()
   const nameRef = useRef<HTMLInputElement>(null)
   const emailRef = useRef<HTMLInputElement>(null)
@@ -64,7 +66,7 @@ export const ContactForm: React.FC = () => {
       <Textarea ref={messageRef} mt="md" label="Message" placeholder="Your message" maxRows={10} minRows={5} autosize name="message" variant="filled" required />
 
       <Group position="center" my="xl">
-        <Button type="submit" size="md">
+        <Button type="submit" size="md" onClick={() => plausible('try-send-message')}>
           Send message
         </Button>
       </Group>

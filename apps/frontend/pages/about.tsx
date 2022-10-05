@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { Anchor, Container, Text } from '@mantine/core'
+import { usePlausible } from 'next-plausible'
 import { MyFavouriteTools } from '../components/favourite-tools'
 import { Title } from '../components/title'
 import { Breadcrumbs } from '../components/breadcrumbs'
@@ -8,6 +9,8 @@ import { NowPlaying } from '../components/music/now-playing'
 import { TopTracks } from '../components/music/top-tracks'
 
 const AboutPage: NextPage = () => {
+  const plausible = usePlausible()
+
   return (
     <>
       <Head>
@@ -22,11 +25,11 @@ const AboutPage: NextPage = () => {
         </Title>
         <Text>
           Hi. I&apos;m a web developer from republic of{' '}
-          <Anchor<'a'> href="https://en.wikipedia.org/wiki/Karakalpakstan" target="_blank" rel="noopener noreferrer">
+          <Anchor<'a'> href="https://en.wikipedia.org/wiki/Karakalpakstan" onClick={() => plausible('karakalpakstan')} target="_blank" rel="noopener noreferrer">
             Karakalpakstan
           </Anchor>{' '}
           (which is located in Central Asia Uzbekistan). I&apos;m currently working at{' '}
-          <Anchor<'a'> href="https://www.datanimate.com/" target="_blank" rel="noopener noreferrer">
+          <Anchor<'a'> href="https://www.datanimate.com/" onClick={() => plausible('current-job-link')} target="_blank" rel="noopener noreferrer">
             Datanimate
           </Anchor>{' '}
           as a full stack web developer.

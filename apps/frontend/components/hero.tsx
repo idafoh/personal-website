@@ -1,6 +1,7 @@
 import { createStyles, Container, Text, Button, Anchor } from '@mantine/core'
 import Image from 'next/future/image'
 import { Icon } from '@iconify/react'
+import { usePlausible } from 'next-plausible'
 import { useMediaQuery } from '@mantine/hooks'
 import { Title } from './title'
 
@@ -72,6 +73,7 @@ interface Props {
 
 export const Hero: React.FC<Props> = ({ imageSrc, imageAlt, cvUrl, age }) => {
   const { classes } = useStyles()
+  const plausible = usePlausible()
   const md = useMediaQuery('(max-width: 992px)')
 
   const DownloadButton = (
@@ -85,6 +87,7 @@ export const Hero: React.FC<Props> = ({ imageSrc, imageAlt, cvUrl, age }) => {
       variant="light"
       color="cyan"
       mx="auto"
+      onClick={() => plausible('check-cv')}
     >
       Check out my CV
     </Button>
@@ -102,11 +105,11 @@ export const Hero: React.FC<Props> = ({ imageSrc, imageAlt, cvUrl, age }) => {
           </Text>
           <Text align={md ? 'center' : undefined} mt={30}>
             Hello there! I&apos;m Abat, {age} y.o. web developer from republic of{' '}
-            <Anchor<'a'> href="https://en.wikipedia.org/wiki/Karakalpakstan" target="_blank" rel="noopener noreferrer">
+            <Anchor<'a'> href="https://en.wikipedia.org/wiki/Karakalpakstan" onClick={() => plausible('karakalpakstan')} target="_blank" rel="noopener noreferrer">
               Karakalpakstan
             </Anchor>{' '}
             (which is located in Central Asia Uzbekistan). I&apos;m passionate about building beautiful and fast web applications. I&apos;m currently working at{' '}
-            <Anchor<'a'> href="https://www.datanimate.com/" target="_blank" rel="noopener noreferrer">
+            <Anchor<'a'> href="https://www.datanimate.com/" onClick={() => plausible('current-job-link')} target="_blank" rel="noopener noreferrer">
               Datanimate
             </Anchor>{' '}
             as a full stack web developer.

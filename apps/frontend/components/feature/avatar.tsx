@@ -3,17 +3,20 @@ import { Avatar as MantineAvatar, Menu } from '@mantine/core'
 import { Icon } from '@iconify/react'
 import { ConfirmLogoutModal } from 'ui'
 import { useRouter } from 'next/router'
+import { usePlausible } from 'next-plausible'
 import { useAuth } from '../../context/auth'
 
 const dashboardUrl = process.env.NEXT_PUBLIC_DASHBOARD_URL
 
 export const Avatar: React.FC = () => {
   const router = useRouter()
+  const plausible = usePlausible()
   const [modalOpened, setModalOpened] = useState(false)
   const [menuOpened, setMenuOpened] = useState(false)
   const { user, logout } = useAuth()
 
   const onClickHandler = () => {
+    plausible('top-account-menu')
     if (!user) {
       router.push('/auth/login')
     }
