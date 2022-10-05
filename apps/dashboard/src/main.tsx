@@ -8,6 +8,9 @@ export const plausible = Plausible({
   domain: import.meta.env.VITE_APP_DOMAIN,
 })
 
+plausible.enableAutoOutboundTracking()
+plausible.enableAutoPageviews()
+
 const rootElement = document.getElementById('root') as HTMLElement
 
 ReactDOM.createRoot(rootElement).render(<App />)
