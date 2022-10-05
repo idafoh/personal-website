@@ -5,10 +5,12 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useNotification } from 'hooks'
 import { Login } from 'ui'
+import { usePlausible } from 'next-plausible'
 import { useAuth } from '../../context/auth'
 
 const LoginPage: NextPage = () => {
   const router = useRouter()
+  const plausible = usePlausible()
   const { login } = useAuth()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -17,6 +19,9 @@ const LoginPage: NextPage = () => {
 
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
+    // I don't care result whether is successfull or not
+    // IMPORTANT: Never send data to plausible that can be used to identify a user
+    plausible('try-login')
 
     const data = { username, password }
 

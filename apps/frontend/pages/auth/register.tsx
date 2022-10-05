@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { useDebouncedState } from '@mantine/hooks'
 import { useNotification } from 'hooks'
 import { Register } from 'ui'
+import { usePlausible } from 'next-plausible'
 import { useAuth } from '../../context/auth'
 import { client } from '../../lib/api-client'
 
@@ -20,6 +21,7 @@ const checkAvilability = async (endpoint: string, value: string, cb: (val: boole
 
 const RegisterPage: NextPage = () => {
   const router = useRouter()
+  const plausible = usePlausible()
   const { register } = useAuth()
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -34,6 +36,10 @@ const RegisterPage: NextPage = () => {
 
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
+
+    // I don't care result whether is successfull or not
+    // IMPORTANT: Never send data to plausible that can be used to identify a user
+    plausible('try-register')
 
     const data = {
       firstName,
