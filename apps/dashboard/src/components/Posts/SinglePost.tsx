@@ -59,12 +59,14 @@ export const SinglePost: React.FC<Props> = ({ initialData }) => {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const isPublishStatusChanged = (initialData?.published !== published).toString()
+    const isPostDataChanged = (title !== initialData?.title || content !== initialData?.content).toString()
     const data = {
       id: initialData?.id.toString() || '0',
       title,
       content,
       published: published ? 'on' : 'off',
       isPublishStatusChanged,
+      isPostDataChanged,
     }
 
     submit(data, {
