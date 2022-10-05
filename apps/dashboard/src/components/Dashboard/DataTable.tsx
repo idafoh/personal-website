@@ -1,72 +1,6 @@
 import { useState } from 'react'
 import { Paper, ScrollArea, Table, Text, createStyles } from '@mantine/core'
 
-const data = [
-  {
-    id: 1,
-    url: 'https://rsuitejs.com',
-    visits: '105,253',
-    unique: '23,361',
-    bounce: '11%',
-  },
-  {
-    id: 2,
-    url: 'https://rsuitejs.com/components/overview/',
-    visits: '103,643',
-    unique: '23,385',
-    bounce: '17%',
-  },
-  {
-    id: 3,
-    url: 'https://rsuitejs.com/components/table/',
-    visits: '140,013',
-    unique: '41,256',
-    bounce: '13%',
-  },
-  {
-    id: 4,
-    url: 'https://rsuitejs.com/components/drawer/',
-    visits: '194,532',
-    unique: '19,038',
-    bounce: '18%',
-  },
-  {
-    id: 5,
-    url: 'https://rsuitejs.com/guide/usage/',
-    visits: '26,353',
-    unique: '1,000',
-    bounce: '20%',
-  },
-  {
-    id: 6,
-    url: 'https://rsuitejs.com/guide/customization/',
-    visits: '11,973',
-    unique: '4,786',
-    bounce: '24%',
-  },
-  {
-    id: 7,
-    url: 'https://rsuitejs.com/guide/customization/',
-    visits: '11,973',
-    unique: '4,786',
-    bounce: '24%',
-  },
-  {
-    id: 8,
-    url: 'https://rsuitejs.com/guide/customization/',
-    visits: '11,973',
-    unique: '4,786',
-    bounce: '24%',
-  },
-  {
-    id: 9,
-    url: 'https://rsuitejs.com/guide/customization/',
-    visits: '11,973',
-    unique: '4,786',
-    bounce: '24%',
-  },
-]
-
 const useStyles = createStyles((theme) => ({
   paper: {
     // backgroundColor: theme.colorScheme === 'dark' ? '#ddd' : '#fff',
@@ -98,7 +32,7 @@ const useStyles = createStyles((theme) => ({
       textDecoration: 'underline',
     },
   },
-  
+
   textColor: {
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : '#575757',
   },
@@ -108,20 +42,25 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-export const DataTable: React.FC = () => {
+interface Props {
+  data: any[]
+  domain: string
+}
+
+export const DataTable: React.FC<Props> = ({ domain, data }) => {
   const { classes, cx } = useStyles()
   const [scrolled, setScrolled] = useState(false)
 
-  const rows = data.map((element) => (
-    <tr key={element.id}>
+  const rows = data.map((element, index) => (
+    <tr key={index}>
       <td>
-        <a className={classes.url} href={element.url} target="_blank" rel="noreferrer">
-          {element.url}
+        <a className={classes.url} href={`https://${domain}${element.page}`} target="_blank" rel="noreferrer">
+          {`https://${domain}${element.page}`}
         </a>
       </td>
-      <td className={classes.textColor}>{element.visits}</td>
-      <td className={classes.textColor}>{element.unique}</td>
-      <td className={classes.textColor}>{element.bounce}</td>
+      <td className={classes.textColor}>{element.visitors?.toLocaleString('en-US')}</td>
+      <td className={classes.textColor}>{element.pageviews?.toLocaleString('en-US')}</td>
+      <td className={classes.textColor}>{element.bounce_rate || 0}%</td>
     </tr>
   ))
 
@@ -135,8 +74,8 @@ export const DataTable: React.FC = () => {
           <thead className={cx(classes.header, { [classes.scrolled]: scrolled })}>
             <tr>
               <th>PAGE NAME</th>
-              <th>VISITORS</th>
               <th>UNIQUE</th>
+              <th>VISITORS</th>
               <th>BOUNCE RATE</th>
             </tr>
           </thead>
