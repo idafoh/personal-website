@@ -20,11 +20,10 @@ export const AuthRegister: React.FC = () => {
   const handleSubmit = async (data: IFormData, event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    const response = await auth.register(data)
-
-    if (response.ok) {
+    try {
+      await auth.register(data)
       navigate('/auth/login')
-    }
+    } catch (error) {}
   }
 
   return (
