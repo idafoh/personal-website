@@ -22,19 +22,20 @@ export const AuthLogin: React.FC = () => {
 
   const handleSubmit = async (data: IFormData, event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const response = await auth.login(data)
 
-    if (!response.ok) {
-      switch (response.statusCode) {
+    try {
+      await auth.login(data)
+
+      navigate(from, { replace: true })
+    } catch (error: any) {
+      switch (error.statusCode) {
         case 404:
           form.setErrors({ username: 'User does not exists with this username' })
           break
         case 400:
-          form.setErrors({ username: response.message, password: response.message })
+          form.setErrors({ username: error.message, password: error.message })
           break
       }
-    } else {
-      navigate(from, { replace: true })
     }
   }
 

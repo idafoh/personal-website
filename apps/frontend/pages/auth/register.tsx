@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useDebouncedState } from '@mantine/hooks'
+import { useNotification } from 'hooks'
 import { Register } from 'ui'
 import { useAuth } from '../../context/auth'
 import { client } from '../../lib/api-client'
@@ -26,6 +27,7 @@ const RegisterPage: NextPage = () => {
   const [email, setEmail] = useDebouncedState('', 700)
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const { show, update } = useNotification()
 
   const [usernameAlreadyExists, setUsernameAlreadyExists] = useState(false)
   const [emailAlreadyExists, setEmailAlreadyExists] = useState(false)
@@ -42,10 +44,15 @@ const RegisterPage: NextPage = () => {
       confirmPassword,
     }
 
+    show({ title: 'Registering', message: 'Please wait...', loading: true })
+
     try {
       await register(data)
       router.push('/auth/login')
-    } catch (error) {}
+      update({ title: 'Success', message: 'You have been registered successfully' }, { success: true })
+    } catch (error: any) {
+      update({ title: 'Error', message: error.message }, { error: true })
+    }
   }
 
   useEffect(() => {
@@ -84,9 +91,6 @@ const RegisterPage: NextPage = () => {
       case 'confirmPassword':
         setConfirmPassword(value)
         break
-
-      default:
-        break
     }
   }
 
@@ -104,8 +108,8 @@ const RegisterPage: NextPage = () => {
           lastNameProps={{ required: true, name: 'lastName', value: lastName, onChange: onChangeHandler }}
           usernameProps={{ required: true, name: 'username', defaultValue: username, onChange: onChangeHandler, error: usernameAlreadyExists ? 'Username already exists' : undefined }}
           emailProps={{ required: true, name: 'email', defaultValue: email, onChange: onChangeHandler, error: emailAlreadyExists ? 'Email already exists' : undefined }}
-          passwordProps={{ required: true, name: 'password', value: password, onChange: onChangeHandler }}
-          confirmPasswordProps={{ required: true, name: 'confirmPassword', value: confirmPassword, onChange: onChangeHandler }}
+          passwordProps={{ required: true, name: 'password', value: password, onChange: onChangeHandler, minLength: 6 }}
+          confirmPasswordProps={{ required: true, name: 'confirmPassword', value: confirmPassword, onChange: onChangeHandler, minLength: 6 }}
         />
       </Register>
     </>
