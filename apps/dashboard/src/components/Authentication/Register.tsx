@@ -11,7 +11,7 @@ export const AuthRegister: React.FC = () => {
     initialValues: { firstName: '', lastName: '', username: '', email: '', password: '', confirmPassword: '' },
 
     validate: {
-      username: (value) => (/^[a-zA-Z0-9_]*$/.test(value) ? null : 'Invalid username'),
+      username: (value) => (/^[a-z][a-z0-9_]*$/.test(value) && value.length > 4 ? null : 'Use only lowercase letters, min 5 letters'),
       password: (value) => (value.length < 6 ? 'Password must have at least 6 letters' : null),
       confirmPassword: (value, values) => (value !== values.password ? 'Passwords did not match' : null),
     },

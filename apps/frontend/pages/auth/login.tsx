@@ -12,6 +12,7 @@ const LoginPage: NextPage = () => {
   const { login } = useAuth()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [usernameError, setUsernameError] = useState('')
   const { show, update } = useNotification()
 
   const onSubmit = async (event: React.FormEvent) => {
@@ -34,9 +35,15 @@ const LoginPage: NextPage = () => {
     const value = event.target.value
 
     switch (type) {
-      case 'username':
-        setUsername(value)
+      case 'username': {
+        const val = value?.trim().toLowerCase() || ''
+        const matchesOk = val.match(/^[a-z][a-z0-9_]*$/) !== null
+        setUsername(val)
+        val.length < 5 && setUsernameError('Username must have at least 5 letters')
+        !matchesOk && setUsernameError('Use only lowercase letters, numbers and underscore')
+        matchesOk && usernameError.length > 0 && val.length > 4 && setUsernameError('')
         break
+      }
 
       case 'password':
         setPassword(value)
@@ -54,7 +61,7 @@ const LoginPage: NextPage = () => {
         <Login.Form
           onSubmit={onSubmit}
           forgotPasswordAnchorProps={{ component: Link, href: '/forgot-password' }}
-          usernameProps={{ required: true, value: username, onChange: onChangeHandler('username') }}
+          usernameProps={{ required: true, value: username, onChange: onChangeHandler('username'), minLength: 5, error: usernameError }}
           passwordProps={{ required: true, value: password, onChange: onChangeHandler('password'), minLength: 6 }}
         />
       </Login>

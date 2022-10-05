@@ -13,9 +13,11 @@ export const AuthLogin: React.FC = () => {
     initialValues: { username: '', password: '' },
 
     validate: {
-      username: (value) => (/^[a-zA-Z0-9_]*$/.test(value) ? null : 'Invalid username'),
+      username: (value) => (/^[a-z][a-z0-9_]*$/.test(value) && value.length > 4 ? null : 'Use only lowercase letters, min 5 letters'),
       password: (value) => (value.length < 6 ? 'Password must have at least 6 letters' : null),
     },
+
+    validateInputOnChange: ['username'],
   })
 
   const from = location.state?.from?.pathname || '/posts/all'
