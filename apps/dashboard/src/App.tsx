@@ -1,12 +1,14 @@
 import { RouterProvider } from 'react-router-dom'
 import { ColorScheme, ColorSchemeProvider, MantineProvider } from '@mantine/core'
-import { useHotkeys, useLocalStorage } from '@mantine/hooks'
+import { useHotkeys, useLocalStorage, useMediaQuery } from '@mantine/hooks'
+import { isMobile } from 'react-device-detect'
 import { NotificationsProvider } from '@mantine/notifications'
 import { NavigationProgress } from '@mantine/nprogress'
 
 import { GlobalProvider } from './context/global'
 import { AuthProvider } from './context/auth'
 import { router } from './router'
+import { NotCompatibleDevice } from './components/NotCompatibleDevice'
 
 export const App: React.FC = () => {
   const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
@@ -15,6 +17,7 @@ export const App: React.FC = () => {
     getInitialValueInEffect: true,
   })
   const toggleColorScheme = (value?: ColorScheme) => setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'))
+  const smallScreen = useMediaQuery('(max-width: 1190px)')
 
   useHotkeys([['mod+J', () => toggleColorScheme()]])
 
@@ -34,9 +37,7 @@ export const App: React.FC = () => {
         <NavigationProgress />
         <NotificationsProvider>
           <GlobalProvider>
-            <AuthProvider>
-              <RouterProvider router={router} />
-            </AuthProvider>
+            <AuthProvider>{isMobile || smallScreen ? <NotCompatibleDevice /> : <RouterProvider router={router} />}</AuthProvider>
           </GlobalProvider>
         </NotificationsProvider>
       </MantineProvider>

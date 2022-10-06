@@ -33,6 +33,7 @@ importers:
       plausible-tracker: ^0.3.8
       react: ^18.2.0
       react-apexcharts: ^1.4.0
+      react-device-detect: ^2.2.2
       react-dom: ^18.2.0
       react-router-dom: ^6.4.1
       tsconfig: workspace:*
@@ -54,6 +55,7 @@ importers:
       plausible-tracker: 0.3.8
       react: 18.2.0
       react-apexcharts: 1.4.0_h6blzwyvqeswgdo7gczbninyvy
+      react-device-detect: 2.2.2_biqbaboplfbrettd7655fr4n2y
       react-dom: 18.2.0_react@18.2.0
       react-router-dom: 6.4.1_biqbaboplfbrettd7655fr4n2y
       ui: link:../../packages/ui
@@ -3109,6 +3111,17 @@ packages:
       react: 18.2.0
     dev: false
 
+  /react-device-detect/2.2.2_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-zSN1gIAztUekp5qUT/ybHwQ9fmOqVT1psxpSlTn1pe0CO+fnJHKRLOWWac5nKxOxvOpD/w84hk1I+EydrJp7SA==}
+    peerDependencies:
+      react: '>= 0.14.0'
+      react-dom: '>= 0.14.0'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      ua-parser-js: 1.0.2
+    dev: false
+
   /react-dom/18.2.0_react@18.2.0:
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
     peerDependencies:
@@ -3639,6 +3652,10 @@ packages:
     resolution: {integrity: sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ==}
     engines: {node: '>=4.2.0'}
     hasBin: true
+
+  /ua-parser-js/1.0.2:
+    resolution: {integrity: sha512-00y/AXhx0/SsnI51fTc0rLRmafiGOM4/O+ny10Ps7f+j/b8p/ZY11ytMgznXkOVo4GQ+KwQG5UQLkLGirsACRg==}
+    dev: false
 
   /unbox-primitive/1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}
