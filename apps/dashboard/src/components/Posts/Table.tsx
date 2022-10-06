@@ -5,6 +5,7 @@ import { keys } from '@mantine/utils'
 import { IconSelector, IconChevronDown, IconChevronUp, IconSearch, IconPencil, IconTrash } from '@tabler/icons'
 
 const formatter = Intl.NumberFormat('en-US', { notation: 'compact' })
+const mainDomain = import.meta.env.VITE_APP_DOMAIN.replace('dashboard.', '')
 
 const useStyles = createStyles((theme, _params, getRef) => ({
   header: {
@@ -59,6 +60,7 @@ interface RowData {
 interface TableSortProps {
   data: RowData[]
   onDelete(id: number, title: string): void
+  noEdit?: boolean
 }
 
 interface ThProps {
@@ -88,7 +90,7 @@ const Th: React.FC<ThProps> = ({ children, reversed, sorted, onSort }) => {
   )
 }
 
-export const PostsTable: React.FC<TableSortProps> = ({ data, onDelete }) => {
+export const PostsTable: React.FC<TableSortProps> = ({ data, onDelete, noEdit }) => {
   const { classes, cx } = useStyles()
 
   const [search, setSearch] = useState('')
@@ -117,18 +119,26 @@ export const PostsTable: React.FC<TableSortProps> = ({ data, onDelete }) => {
   const rows = sortedData.map((row) => (
     <tr key={row.id}>
       <td>
-        <Anchor component={Link} to={`/posts/${row.slug}`}>
-          {row.title}
-        </Anchor>
+        {noEdit ? (
+          <Anchor<'a'> href={row.published ? `https://${mainDomain}/blog/${row.slug}` : `https://${mainDomain}`} target="_blank" rel="noreferrer noopener">
+            {row.title}
+          </Anchor>
+        ) : (
+          <Anchor component={Link} to={`/posts/${row.slug}`}>
+            {row.title}
+          </Anchor>
+        )}
       </td>
       <td>{formatter.format(row.views)}</td>
       <td>{formatter.format(row.likeCount)}</td>
       <td>{row.published ? <Badge color="green">Published</Badge> : <Badge color="orange">Draft</Badge>}</td>
       <td>
         <Group spacing={0} position="right">
-          <ActionIcon component={Link} to={`/posts/${row.slug}`}>
-            <IconPencil size={16} stroke={1.5} />
-          </ActionIcon>
+          {!noEdit && (
+            <ActionIcon component={Link} to={`/posts/${row.slug}`}>
+              <IconPencil size={16} stroke={1.5} />
+            </ActionIcon>
+          )}
           <ActionIcon color="red" onClick={() => onDelete(row.id, row.title)}>
             <IconTrash size={16} stroke={1.5} />
           </ActionIcon>
