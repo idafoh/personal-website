@@ -37,6 +37,7 @@ const ResetPasswordPage: NextPage = () => {
       password: newPassword,
       passwordConfirmation: confirmPassword,
       token,
+      reCaptchatoken: await grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, { action: 'submit' }),
     }
 
     setIsLoading(true)

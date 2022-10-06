@@ -32,7 +32,8 @@ const ForgotPasswordPage: NextPage = () => {
 
     try {
       setIsLoading(true)
-      await client('auth/forgot-password', { data: { email } })
+      const token = await grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, { action: 'submit' })
+      await client('auth/forgot-password', { data: { email, token } })
       show({ title: 'Email sent', message: 'Check your email' }, { success: true })
     } catch (error) {
       show({ title: "Can't send email", message: 'Something went wrong' }, { error: true })
