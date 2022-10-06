@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom'
-import { Navbar, Group, Code, ScrollArea, createStyles, Menu } from '@mantine/core'
+import { Navbar, Group, Code, ScrollArea, createStyles, Menu, Title } from '@mantine/core'
 import { ConfirmLogoutModal } from 'ui'
 import { IconGauge, IconAdjustments, IconNews, IconUser, IconLogout } from '@tabler/icons'
 import { UserButton } from './UserButton'
 import { LinksGroup } from './NavbarLinksGroup'
-import { Logo } from './Logo'
 import { useClickOutside, useToggle } from '@mantine/hooks'
 import { useAuth } from '~/context/auth'
 
@@ -81,9 +80,9 @@ export const NavbarNested: React.FC<Props> = ({ name, email, image }) => {
       <Navbar className={classes.navbar} width={{ sm: 300 }}>
         <Navbar.Section className={classes.header}>
           <Group position="apart">
-            <Link to="/" style={{ color: 'inherit' }}>
-              <Logo width={120} />
-            </Link>
+            <Title order={2} size="h2">
+              Dashboard
+            </Title>
             <Code sx={{ fontWeight: 700 }}>v{APP_VERSION}</Code>
           </Group>
         </Navbar.Section>
