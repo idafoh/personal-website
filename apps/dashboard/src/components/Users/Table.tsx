@@ -4,6 +4,7 @@ interface Props {
   data: {
     id: number
     avatar: string
+    username: string
     firstName: string
     lastName: string
     role: 'admin' | 'user'
@@ -31,6 +32,10 @@ export const UsersTable: React.FC<Props> = ({ data }) => {
       </td>
 
       <td>
+        <Text>{item.username}</Text>
+      </td>
+
+      <td>
         <Badge color={roleColors[item.role.toLowerCase()]} variant={theme.colorScheme === 'dark' ? 'light' : 'outline'}>
           {item.role}
         </Badge>
@@ -49,6 +54,7 @@ export const UsersTable: React.FC<Props> = ({ data }) => {
         <thead>
           <tr>
             <th>User</th>
+            <th>Username</th>
             <th>Role</th>
             <th>Email</th>
           </tr>
