@@ -1,8 +1,10 @@
-import type { RegisterData as IFormData } from '~/lib/auth-provider'
+import type { RegisterData } from '~/lib/auth-provider'
 import { Link, useNavigate } from 'react-router-dom'
 import { Register } from 'ui'
 import { useForm } from '@mantine/form'
 import { useAuth } from '~/context/auth'
+
+type IFormData = Omit<RegisterData, 'token'>
 
 export const AuthRegister: React.FC = () => {
   const auth = useAuth()
@@ -21,7 +23,8 @@ export const AuthRegister: React.FC = () => {
     event.preventDefault()
 
     try {
-      await auth.register(data)
+      const token = await grecaptcha.execute(import.meta.env.VITE_RECAPTCHA_SITE_KEY, { action: 'register' })
+      await auth.register({ ...data, token })
       navigate('/auth/login')
     } catch (error) {}
   }

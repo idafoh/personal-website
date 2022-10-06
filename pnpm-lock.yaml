@@ -23,6 +23,7 @@ importers:
       '@mantine/rte': ^5.5.0
       '@mantine/utils': ^5.5.0
       '@tabler/icons': ^1.101.0
+      '@types/grecaptcha': ^3.0.4
       '@types/node': ^18.8.0
       '@types/react': ^18.0.21
       '@types/react-dom': ^18.0.6
@@ -60,6 +61,7 @@ importers:
       react-router-dom: 6.4.1_biqbaboplfbrettd7655fr4n2y
       ui: link:../../packages/ui
     devDependencies:
+      '@types/grecaptcha': 3.0.4
       '@types/node': 18.8.0
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6

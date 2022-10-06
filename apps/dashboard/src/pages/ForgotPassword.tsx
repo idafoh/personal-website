@@ -66,8 +66,9 @@ export const ForgotPasswordPage: React.FC = () => {
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const email = formData.get('email') as string
+  const token = await grecaptcha.execute(import.meta.env.VITE_RECAPTCHA_SITE_KEY, { action: 'forgot_password' })
 
-  const data = { email }
+  const data = { email, token }
 
   try {
     await client('auth/forgot-password', {
