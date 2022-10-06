@@ -20,9 +20,10 @@ const navbarData = [
     ],
   },
   { label: 'Users', icon: IconUser, link: '/users' },
+  { label: 'All posts', icon: IconNews, link: '/all-posts' },
   { label: 'Settings', icon: IconAdjustments, link: '/settings' },
 ]
-const onlyAdminItemIndexes = [0, 2]
+const onlyAdminItemIndexes = [0, 2, 3]
 
 const useStyles = createStyles((theme) => ({
   navbar: {

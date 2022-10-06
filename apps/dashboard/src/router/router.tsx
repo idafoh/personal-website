@@ -13,6 +13,7 @@ import { DraftsPage, loader as draftLoader } from '../pages/Posts/Drafts'
 import { PublishedPostsPage, loader as publishedLoader } from '../pages/Posts/Published'
 import { SinglePostPage, loader as postLoader, action as updatePostAction } from '../pages/Posts/SinglePost'
 import { UsersPage, loader as usersLoader } from '../pages/Users'
+import { AllPostsPage as AdminAllPosts, loader as adminPostsLoader, action as adminPostsAction } from '../pages/AllPosts'
 import { SettingsPage } from '../pages/Settings'
 import { updateBasicsAction, updateEmailAndUsernameAction, updatePasswordAction } from '../actions/settings'
 import { ForgotPasswordPage, action as forgotPasswordAction } from '~/pages/ForgotPassword'
@@ -53,13 +54,40 @@ export const router = createBrowserRouter([
       {
         path: '/posts',
         children: [
-          { path: 'all', element: <AllPostsPage />, loader: postsLoader, action: postsAction, shouldRevalidate: ({ currentUrl }) => currentUrl.pathname !== '/posts/all' },
-          { path: 'published', element: <PublishedPostsPage />, loader: publishedLoader, shouldRevalidate: ({ currentUrl }) => currentUrl.pathname !== '/posts/published' },
-          { path: 'drafts', element: <DraftsPage />, loader: draftLoader, shouldRevalidate: ({ currentUrl }) => currentUrl.pathname !== '/posts/drafts' },
+          {
+            path: 'all',
+            element: <AllPostsPage />,
+            loader: postsLoader,
+            action: postsAction,
+            shouldRevalidate: ({ currentUrl, nextUrl }) => currentUrl.pathname !== '/posts/all' || nextUrl.search !== '',
+          },
+          {
+            path: 'published',
+            element: <PublishedPostsPage />,
+            loader: publishedLoader,
+            shouldRevalidate: ({ currentUrl, nextUrl }) => currentUrl.pathname !== '/posts/published' || nextUrl.search !== '',
+          },
+          {
+            path: 'drafts',
+            element: <DraftsPage />,
+            loader: draftLoader,
+            shouldRevalidate: ({ currentUrl, nextUrl }) => currentUrl.pathname !== '/posts/drafts' || nextUrl.search !== '',
+          },
           { path: 'create', element: <CreatePostPage />, action: createPostAction },
           { path: ':slug', element: <SinglePostPage />, loader: postLoader },
           { path: ':slug/update', action: updatePostAction },
         ],
+      },
+      {
+        path: '/all-posts',
+        element: (
+          <RequireAuth onlyAdmin>
+            <AdminAllPosts />
+          </RequireAuth>
+        ),
+        loader: adminPostsLoader,
+        action: adminPostsAction,
+        shouldRevalidate: ({ currentUrl, nextUrl }) => currentUrl.pathname !== '/all-posts' || nextUrl.search !== '',
       },
       {
         path: '/users',

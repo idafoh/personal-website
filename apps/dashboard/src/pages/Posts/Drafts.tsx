@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { LoaderFunction, useFetcher, useLoaderData } from 'react-router-dom'
+import { LoaderFunction, redirect, useFetcher, useLoaderData } from 'react-router-dom'
 import { Container } from '@mantine/core'
 import { PostsTable } from '~/components/Posts/Table'
 import { usePageTitle } from '~/hooks/usePageTitle'
