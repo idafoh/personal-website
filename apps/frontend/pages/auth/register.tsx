@@ -53,7 +53,8 @@ const RegisterPage: NextPage = () => {
     show({ title: 'Registering', message: 'Please wait...', loading: true })
 
     try {
-      await register(data)
+      const token = await grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, { action: 'submit' })
+      await register({ ...data, token })
       router.push('/auth/login')
       update({ title: 'Success', message: 'You have been registered successfully' }, { success: true })
     } catch (error: any) {

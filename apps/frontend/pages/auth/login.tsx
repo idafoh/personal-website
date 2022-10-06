@@ -28,7 +28,8 @@ const LoginPage: NextPage = () => {
     show({ title: 'Logging in', message: 'Please wait...', loading: true })
 
     try {
-      await login(data)
+      const token = await grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, { action: 'submit' })
+      await login({ ...data, token })
       router.replace('/')
       update({ title: 'Success', message: 'You have been logged in successfully' }, { success: true })
     } catch (error) {

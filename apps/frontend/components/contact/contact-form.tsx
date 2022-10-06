@@ -32,7 +32,8 @@ export const ContactForm: React.FC = () => {
     show({ title: 'Sending message', message: 'Please wait...', loading: true })
 
     try {
-      await client('contact', { data })
+      const token = await grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, { action: 'submit' })
+      await client('contact', { data: { ...data, token } })
       update(
         {
           title: 'Message sent',
