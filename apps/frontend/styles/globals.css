@@ -140,7 +140,21 @@
 }
 
 @media (max-width: 768px) {
+  h3 {
+    font-size: 20px !important;
+  }
+
   .my-tools-container {
     flex-direction: column;
+  }
+
+  .now-playing-container {
+    flex-direction: row !important;
+    gap: 10px;
+  }
+
+  .now-playing {
+    flex-direction: row !important;
+    align-items: center;
   }
 }
