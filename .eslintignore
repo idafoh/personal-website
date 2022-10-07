@@ -2,3 +2,4 @@
 .eslintrc.cjs
 packages/eslint-config-custom/index.js
 *.json
+*.md
