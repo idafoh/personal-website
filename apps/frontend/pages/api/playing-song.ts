@@ -8,13 +8,18 @@ export default async function handler(_: NextApiRequest, res: NextApiResponse) {
     return res.status(200).json({ isPlaying: false })
   }
 
-  const song = await response.json()
-  const isPlaying = song.is_playing
-  const title = song.item.name
-  const artist = song.item.artists.map((_artist: any) => _artist.name).join(', ')
-  const album = song.item.album.name
-  const albumImageUrl = song.item.album.images[0].url
-  const songUrl = song.item.external_urls.spotify
+  const result = await response.json()
+
+  if (result.currently_playing_type !== 'track') {
+    return res.status(200).json({ isPlaying: false })
+  }
+
+  const isPlaying = result.is_playing
+  const title = result.item.name
+  const artist = result.item.artists.map((_artist: any) => _artist.name).join(', ')
+  const album = result.item.album.name
+  const albumImageUrl = result.item.album.images[0].url
+  const songUrl = result.item.external_urls.spotify
 
   return res.status(200).json({
     album,
