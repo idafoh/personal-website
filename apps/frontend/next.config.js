@@ -1,5 +1,8 @@
-const withTM = require('next-transpile-modules')(['hooks', 'ui'])
-const { withPlausibleProxy } = require('next-plausible')
+const nextTranspileModules = require('next-transpile-modules')
+const nextPlausible = require('next-plausible')
+
+const withTM = nextTranspileModules(['hooks', 'ui'])
+const withPlausibleProxy = nextPlausible.withPlausibleProxy()
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -9,9 +12,8 @@ const nextConfig = {
     remotePatterns: [
       { protocol: 'https', hostname: 'abatme.s3.amazonaws.com' },
       { protocol: 'https', hostname: 'www.gravatar.com' },
-      { protocol: 'https', hostname: 'images.ctfassets.net' },
     ],
   },
 }
 
-module.exports = withPlausibleProxy()(withTM(nextConfig))
+module.exports = withPlausibleProxy(withTM(nextConfig))
