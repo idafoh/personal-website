@@ -3,3 +3,4 @@
 packages/eslint-config-custom/index.js
 *.json
 *.md
+next.config.js
