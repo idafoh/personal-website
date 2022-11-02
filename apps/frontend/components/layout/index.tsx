@@ -26,7 +26,7 @@ const socialAccounts = [
     icon: 'tabler:brand-twitter',
   },
   {
-    link: 'https://youtube.com/channel/UCEQv97XiI5lIMNDdmWlpoEA',
+    link: 'https://youtube.com/@abat_dauletbaev',
     icon: 'tabler:brand-youtube',
   },
   {
