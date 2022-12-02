@@ -11,5 +11,7 @@ declare namespace NodeJS {
     SPOTIFY_CLIENT_ID: string
     SPOTIFY_CLIENT_SECRET: string
     SPOTIFY_REFRESH_TOKEN: string
+    MONGODB_URI: string
+    MONGODB_DB: string
   }
 }
