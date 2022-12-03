@@ -7,7 +7,11 @@ const client = new MongoClient(url);
 // Database Name
 const dbName = process.env.MONGODB_DB || 'projectPersonalWebsite';
 
-export async function connectToDatabase() {
-  await client.connect();
-  return [() => client.db(dbName), client] as const;
+export function connectToDatabase() {
+  const getConnectedDb = async () => {
+    await client.connect();
+    return client.db(dbName)
+  }
+
+  return [getConnectedDb, client] as const;
 }

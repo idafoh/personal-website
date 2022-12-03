@@ -3,22 +3,22 @@ import { connectToDatabase } from '../../lib/db'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // I'll use this to Profanity Filter the content
-  const { input } = req.body
+  let { input } = req.body
 
   if (!input || typeof input !== 'string') {
-    res.status(400).json({ message: 'Invalid input' })
-    return
+    return res.status(400).json({ message: 'Invalid input' })
   }
 
-  const [getDb, client] = await connectToDatabase()
+  input = input.toLowerCase()
+  const [getDb, client] = connectToDatabase()
 
   try {
-    const db = getDb()
+    const db = await getDb()
     const collection = db.collection('rebukes')
     // insert unique input
     await collection.updateOne(
       { input },
-      { $set: { input: input.toLowerCase() }, $inc: { count: 1 } },
+      { $set: { input }, $inc: { count: 1 } },
       { upsert: true }
     )
     res.status(200).json({ ok: true })

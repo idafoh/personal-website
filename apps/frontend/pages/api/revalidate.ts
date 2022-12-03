@@ -16,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     return res.json({ ok: true })
-  } catch (err) {
+  } catch (error) {
     // If there was an error, Next.js will continue
     // to show the last successfully generated page
     return res.status(500).json({ ok: false })
